@@ -11,6 +11,5 @@ def HttpHandler():
     def postAttendanceResult(self, data):
         response = requests.post(url = self.url, data = data) 
         
-        # extracting response text  
         pastebin_url = response.text
-        print("The pastebin URL is:%s"%pastebin_url)
+        print("Response: %s"%pastebin_url)
