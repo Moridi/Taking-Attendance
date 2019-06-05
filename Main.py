@@ -1,2 +1,5 @@
+from EducationSystem import EducationSystem
+
 if __name__ == "__main__":
-    pass
+    educationSystem = EducationSystem.getInstance()
+    educationSystem.getAttendanceList()
