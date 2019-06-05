@@ -1,6 +1,7 @@
 from HttpHandler import HttpHandler
 from Course import Course
 from Exam import Exam
+from Professor import Professor
 
 class EducationSystem(object):
    __instance = None
@@ -32,12 +33,24 @@ class EducationSystem(object):
    def setDate(self):
       self.date = self.attendanceList["date"]
 
+   def setProfessor(self, professorElement):
+      professor = Professor(professorElement["first_name"], \
+            professorElement["last_name"], \
+            professorElement["id"])
+      return professor
+
+   def setCourse(self, exam):
+      professor = self.setProfessor(exam["professor"])
+      course = Course(exam["course_name"], professor)
+      # @TODO: Add students
+
    def setExam(self, examElement):
-      
-      newExam = Exam(examElement["exam_id"], \
+      exam = Exam(examElement["exam_id"], \
             examElement["room_number"], \
             examElement["start_at"], \
             examElement["end_at"])
+   
+      course = self.setCourse(examElement)
 
    def setExams(self):
       jsonExams = self.attendanceList["classes"]
