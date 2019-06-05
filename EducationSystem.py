@@ -1,0 +1,2 @@
+class EducationSystem(object):
+    pass
