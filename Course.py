@@ -7,5 +7,5 @@ class Course():
     def getCourseName(self):
         return self.courseName
 
-    def addStudent(newStudent):
+    def addStudent(self, newStudent):
         self.students.append(newStudent)
