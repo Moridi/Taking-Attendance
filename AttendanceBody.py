@@ -9,21 +9,10 @@ class AttendanceBody():
     
     def teacherSigned(self):
         self.isTeacherSigned = True
-    
-    def getFormattedExamId(self):
-        return "exam_id:" + str(self.examId) + ",\n"
-
-    def getFormattedIsTeacherSigned(self):
-        return "is_teacher_signed:\"" + \
-                str(self.isTeacherSigned).lower() + ",\n"
-
-    def getFormattedPresentStudentsList(self):
-        return "is_teacher_signed:\"" + \
-                str(self.presentStudentsList) + "\n"
 
     def getAttendanceBody(self):
-        return "{\n" +\
-                    self.getFormattedExamId() +\
-                    self.getFormattedIsTeacherSigned() +\
-                    self.getFormattedPresentStudentsList +\
-                "}"
+        return {
+            "exam_id" : self.examId,
+            "is_teacher_signed" : str(self.isTeacherSigned).lower(),
+            "present_students_list" : str(self.presentStudentsList)
+        }
