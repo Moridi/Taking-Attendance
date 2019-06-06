@@ -100,3 +100,43 @@ class EducationSystem(object):
             print("student.id:" + str(student.id))
             print("student.chairNumber:" + str(student.chairNumber))
          print("$$$$$")
+
+   
+   def printExams(self):
+      print("status:" + str(self.status))
+      print("date:" + str(self.date))
+      for exam in self.exams:
+         print("******")
+         print("examId:" + str(exam.examId))
+         print("roomNumber:" + str(exam.roomNumber))
+         print("courseName:" + exam.course.courseName)
+         print("professor.firstName:" + exam.course.professor.firstName)
+         print("professor.lastName:" + exam.course.professor.lastName)
+         print("professor.id:" + exam.course.professor.id)
+         print()
+
+   def examIdIsValid(self, exam_id):
+      for exam in self.exams:
+         if str(exam.examId) == exam_id:
+            return True
+
+      return False
+
+   def studentIsInExam(self, exam_id, student_id):
+      current_exam = None
+
+      for exam in self.exams:
+         if str(exam.examId) == exam_id:
+            current_exam = exam
+            break
+         
+      if current_exam is None:
+         return False
+
+      for student in exam.course.students:
+         if str(student.id) == student_id:
+            return True
+
+
+      return False
+      
