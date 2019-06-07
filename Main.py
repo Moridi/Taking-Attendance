@@ -12,6 +12,9 @@ if __name__ == "__main__":
 
     while True:
         exam_id = None
+        if CommandHandler.getInstance().getExams() == "get_exams":
+        	educationSystem.printExams()
+
         while True:
             exam_id = CommandHandler.getInstance().getExamId()
             if educationSystem.examIdIsValid(exam_id) or exam_id == "done":

@@ -29,6 +29,11 @@ class CommandHandler():
         input_res = input()
         return input_res
 
+    def getExams(self):
+    	input_res = input()
+    	educationSystem = EducationSystem.getInstance()
+    	educationSystem.printExams()
+
     def getTeacherSignStatus(self):
         print("Is it teacher signed?[Y/N]")
         input_res = input()
