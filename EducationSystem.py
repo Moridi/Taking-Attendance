@@ -4,6 +4,7 @@ from Professor import Professor
 from Professors import Professors
 from Student import Student
 from Students import Students
+from Exams import Exams
 
 class EducationSystem(object):
    __instance = None
@@ -18,7 +19,7 @@ class EducationSystem(object):
          raise Exception("This class is a singleton!")
       else:
          EducationSystem.__instance = self
-         self.exams = []
+         self.exams = Exams()
          self.students = Students()
          self.professors = Professors()
 
@@ -78,13 +79,13 @@ class EducationSystem(object):
       jsonExams = self.attendanceList["classes"]
       for index, examElement in enumerate(jsonExams):
          exam = self.setExam(examElement)
-         self.exams.append(exam)
+         self.exams.addExam(exam)
 
    def printDatabase(self):
       print("status:" + str(self.status))
       print("date:" + str(self.date))
       print("classes:")
-      for exam in self.exams:
+      for exam in self.exams.exams:
          print("******")
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
@@ -107,7 +108,7 @@ class EducationSystem(object):
    def printExams(self):
       print("status:" + str(self.status))
       print("date:" + str(self.date))
-      for exam in self.exams:
+      for exam in self.exams.exams:
          print("******")
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
@@ -118,7 +119,7 @@ class EducationSystem(object):
          print()
 
    def examIdIsValid(self, exam_id):
-      for exam in self.exams:
+      for exam in self.exams.exams:
          if str(exam.examId) == exam_id:
             return True
 
@@ -127,7 +128,7 @@ class EducationSystem(object):
    def studentIsInExam(self, exam_id, student_id):
       current_exam = None
 
-      for exam in self.exams:
+      for exam in self.exams.exams:
          if str(exam.examId) == exam_id:
             current_exam = exam
             break
