@@ -1,6 +1,7 @@
 from HttpHandler import HttpHandler
 from Exam import Exam
 from Professor import Professor
+from Professors import Professors
 from Student import Student
 from Students import Students
 
@@ -19,6 +20,7 @@ class EducationSystem(object):
          EducationSystem.__instance = self
          self.exams = []
          self.students = Students()
+         self.professors = Professors()
 
    def initializeSystem(self):
       self.getAttendanceList()
@@ -40,7 +42,9 @@ class EducationSystem(object):
       professor = Professor(professorElement["first_name"], \
             professorElement["last_name"], \
             professorElement["id"])
-      return professor
+      
+      self.professors.addProfessor(professor)
+      return professor.getId()
 
    def setStudent(self, studentElement):
       student = Student(studentElement["first_name"],\
@@ -53,14 +57,14 @@ class EducationSystem(object):
 
    def setExam(self, examElement):
 
-      professor = self.setProfessor(examElement["professor"])
+      professorId = self.setProfessor(examElement["professor"])
 
       exam = Exam(examElement["exam_id"], \
             examElement["room_number"], \
             examElement["start_at"], \
             examElement["end_at"],\
             examElement["course_name"],\
-            professor)
+            professorId)
 
       jsonStudents = examElement["students"]
 
@@ -87,19 +91,18 @@ class EducationSystem(object):
          print("startAt:" + str(exam.startAt))
          print("endAt:" + str(exam.endAt))
          print("courseName:" + exam.courseName)
-         print("professor.firstName:" + exam.professor.firstName)
-         print("professor.lastName:" + exam.professor.lastName)
-         print("professor.id:" + exam.professor.id)
+         print("professor.firstName:" + self.professors.professors[exam.professorId].firstName)
+         print("professor.lastName:" + self.professors.professors[exam.professorId].lastName)
+         print("professor.id:" + self.professors.professors[exam.professorId].id)
          print()
-
-      print("Students:")
-      for studentId in self.students.students:
-         print("######")
-         print("student.firstName:" + str(self.students.students[studentId].firstName))
-         print("student.lastName:" + str(self.students.students[studentId].lastName))
-         print("student.id:" + str(self.students.students[studentId].id))
-         # print("student.chairNumber:" + str(student.chairNumber))
-      print("$$$$$")
+         print("Students:")
+         for studentId in exam.studentIds:
+            print("######")
+            print("student.firstName:" + str(self.students.students[studentId].firstName))
+            print("student.lastName:" + str(self.students.students[studentId].lastName))
+            print("student.id:" + str(self.students.students[studentId].id))
+            # print("student.chairNumber:" + str(student.chairNumber))
+         print("$$$$$")
 
    
    def printExams(self):
@@ -110,9 +113,9 @@ class EducationSystem(object):
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
          print("courseName:" + exam.courseName)
-         print("professor.firstName:" + exam.professor.firstName)
-         print("professor.lastName:" + exam.professor.lastName)
-         print("professor.id:" + exam.professor.id)
+         # print("professor.firstName:" + exam.professor.firstName)
+         # print("professor.lastName:" + exam.professor.lastName)
+         # print("professor.id:" + exam.professor.id)
          print()
 
    def examIdIsValid(self, exam_id):

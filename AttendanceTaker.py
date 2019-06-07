@@ -22,6 +22,7 @@ class AttendanceTaker():
         self.commandHandler = CommandHandler.getInstance()
 
     def run(self):
+        self.educationSystem.printDatabase()
         while True:
             self.get_exams()
             exam_id = self.get_exam()
