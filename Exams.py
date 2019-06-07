@@ -1,6 +1,13 @@
 class Exams():
     def __init__(self):
-        self.exams = []
+        self.exams = {}
 
-    def addExam(self, exam):
-        self.exams.append(exam)
+    def addExam(self, exam, examId):
+        if (examId in self.exams):
+            pass
+        else:
+            self.exams[examId] = exam
+
+    def printExam(self, examId):
+        self.exams[examId].printStudents()
+            

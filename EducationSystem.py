@@ -79,13 +79,13 @@ class EducationSystem(object):
       jsonExams = self.attendanceList["classes"]
       for index, examElement in enumerate(jsonExams):
          exam = self.setExam(examElement)
-         self.exams.addExam(exam)
+         self.exams.addExam(exam, exam.getId())
 
    def printDatabase(self):
       print("status:" + str(self.status))
       print("date:" + str(self.date))
       print("classes:")
-      for exam in self.exams.exams:
+      for exam in self.exams.exams.values():
          print("******")
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
@@ -108,7 +108,7 @@ class EducationSystem(object):
    def printExams(self):
       print("status:" + str(self.status))
       print("date:" + str(self.date))
-      for exam in self.exams.exams:
+      for exam in self.exams.exams.values():
          print("******")
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
@@ -119,7 +119,7 @@ class EducationSystem(object):
          print()
 
    def examIdIsValid(self, exam_id):
-      for exam in self.exams.exams:
+      for exam in self.exams.exams.values():
          if str(exam.examId) == exam_id:
             return True
 
@@ -128,7 +128,7 @@ class EducationSystem(object):
    def studentIsInExam(self, exam_id, student_id):
       current_exam = None
 
-      for exam in self.exams.exams:
+      for exam in self.exams.exams.values():
          if str(exam.examId) == exam_id:
             current_exam = exam
             break

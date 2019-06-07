@@ -11,3 +11,11 @@ class Exam():
 
     def addStudent(self, newStudent):
         self.students.append(newStudent)
+
+    def getId(self):
+        return self.examId
+
+    def printStudents(self):
+        SID = 0
+        for student in self.students:
+            print(student[SID])
