@@ -46,8 +46,10 @@ class EducationSystem(object):
       student = Student(studentElement["first_name"],\
             studentElement["last_name"],\
             studentElement["id"])
+      
+      self.students.addStudent(student)
             # studentElement["chair_number"])
-      return student
+      return student.getId()
 
    def setExam(self, examElement):
 
@@ -63,8 +65,8 @@ class EducationSystem(object):
       jsonStudents = examElement["students"]
 
       for index, studentElement in enumerate(jsonStudents):
-         student = self.setStudent(studentElement)
-         exam.addStudent(student)
+         studentId = self.setStudent(studentElement)
+         exam.addStudent(studentId)
       
       return exam
 
@@ -89,14 +91,15 @@ class EducationSystem(object):
          print("professor.lastName:" + exam.professor.lastName)
          print("professor.id:" + exam.professor.id)
          print()
-         print("Students:")
-         for student in exam.students:
-            print("######")
-            print("student.firstName:" + str(student.firstName))
-            print("student.lastName:" + str(student.lastName))
-            print("student.id:" + str(student.id))
-            # print("student.chairNumber:" + str(student.chairNumber))
-         print("$$$$$")
+
+      print("Students:")
+      for studentId in self.students.students:
+         print("######")
+         print("student.firstName:" + str(self.students.students[studentId].firstName))
+         print("student.lastName:" + str(self.students.students[studentId].lastName))
+         print("student.id:" + str(self.students.students[studentId].id))
+         # print("student.chairNumber:" + str(student.chairNumber))
+      print("$$$$$")
 
    
    def printExams(self):
@@ -130,7 +133,7 @@ class EducationSystem(object):
       if current_exam is None:
          return False
 
-      for student in exam.students:
+      for student in self.students.students:
          if str(student.id) == student_id:
             return True
 
