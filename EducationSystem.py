@@ -113,9 +113,9 @@ class EducationSystem(object):
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
          print("courseName:" + exam.courseName)
-         print("professor.firstName:" + self.professor[exam.professorId].firstName)
-         print("professor.lastName:" + self.professor[exam.professorId].lastName)
-         print("professor.id:" + self.professor[exam.professorId].id)
+         print("professor.firstName:" + self.professors.professors[exam.professorId].firstName)
+         print("professor.lastName:" + self.professors.professors[exam.professorId].lastName)
+         print("professor.id:" + self.professors.professors[exam.professorId].id)
          print()
 
    def examIdIsValid(self, exam_id):
@@ -137,7 +137,7 @@ class EducationSystem(object):
          return False
 
       for student in self.students.students:
-         if str(student.id) == student_id:
+         if str(student) == student_id:
             return True
          
    def printExam(self, examId):

@@ -22,19 +22,15 @@ class AttendanceTaker():
         self.commandHandler = CommandHandler.getInstance()
 
     def run(self):
-        self.educationSystem.printDatabase()
+        # self.educationSystem.printDatabase()
         while True:
             self.getExams()
+            self.getExamStudentsList()
             exam_id = self.getExam()
             if exam_id == "done":
                 break
             is_teacher_signed, students_list =  self.getStudents(exam_id)
             self.sendResult(exam_id, is_teacher_signed, students_list)
-
-    def getStudentsList(self):
-        command, exam_id = self.commandHandler.getStudents()
-        if command == "get_students":
-            self.educationSystem.printExam(exam_id)
 
     def getExams(self):
         if self.commandHandler.getExams() == "get_exams":
@@ -70,3 +66,7 @@ class AttendanceTaker():
                 "is_teacher_signed": is_teacher_signed,
                 "present_students_list": students_list
             })
+    def getExamStudentsList(self):
+        command, exam_id = self.commandHandler.getExamsStudentsList()
+        while command == "get_students":
+            self.educationSystem.printExam(exam_id)

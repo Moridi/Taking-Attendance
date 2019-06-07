@@ -33,7 +33,7 @@ class CommandHandler():
         input_res = input()
         return input_res
 
-    def getStudents(self):
+    def getExamsStudentsList(self):
         input_res, exam_id = input().split()
         if input_res == "get_students":
             return "get_students", int(exam_id)
