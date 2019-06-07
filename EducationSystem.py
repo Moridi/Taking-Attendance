@@ -1,5 +1,4 @@
 from HttpHandler import HttpHandler
-from Course import Course
 from Exam import Exam
 from Professor import Professor
 from Student import Student
@@ -18,6 +17,7 @@ class EducationSystem(object):
       else:
          EducationSystem.__instance = self
          self.exams = []
+         self.students = {}
 
    def initializeSystem(self):
       self.getAttendanceList()
@@ -44,31 +44,27 @@ class EducationSystem(object):
    def setStudent(self, studentElement):
       student = Student(studentElement["first_name"],\
             studentElement["last_name"],\
-            studentElement["id"],\
-            studentElement["chair_number"])
+            studentElement["id"])
+            # studentElement["chair_number"])
       return student
 
-   def setCourse(self, exam):
-      professor = self.setProfessor(exam["professor"])
-      course = Course(exam["course_name"], professor)
-
-      jsonStudents = exam["students"]
-
-      for index, studentElement in enumerate(jsonStudents):
-         student = self.setStudent(studentElement)
-         course.addStudent(student)
-      
-      return course
-
    def setExam(self, examElement):
+
+      professor = self.setProfessor(examElement["professor"])
+
       exam = Exam(examElement["exam_id"], \
             examElement["room_number"], \
             examElement["start_at"], \
-            examElement["end_at"])
-   
-      course = self.setCourse(examElement)
-      exam.setCourse(course)
+            examElement["end_at"],\
+            examElement["course_name"],\
+            professor)
 
+      jsonStudents = examElement["students"]
+
+      for index, studentElement in enumerate(jsonStudents):
+         student = self.setStudent(studentElement)
+         exam.addStudent(student)
+      
       return exam
 
    def setExams(self):
@@ -87,18 +83,18 @@ class EducationSystem(object):
          print("roomNumber:" + str(exam.roomNumber))
          print("startAt:" + str(exam.startAt))
          print("endAt:" + str(exam.endAt))
-         print("courseName:" + exam.course.courseName)
-         print("professor.firstName:" + exam.course.professor.firstName)
-         print("professor.lastName:" + exam.course.professor.lastName)
-         print("professor.id:" + exam.course.professor.id)
+         print("courseName:" + exam.courseName)
+         print("professor.firstName:" + exam.professor.firstName)
+         print("professor.lastName:" + exam.professor.lastName)
+         print("professor.id:" + exam.professor.id)
          print()
          print("Students:")
-         for student in exam.course.students:
+         for student in exam.students:
             print("######")
             print("student.firstName:" + str(student.firstName))
             print("student.lastName:" + str(student.lastName))
             print("student.id:" + str(student.id))
-            print("student.chairNumber:" + str(student.chairNumber))
+            # print("student.chairNumber:" + str(student.chairNumber))
          print("$$$$$")
 
    
@@ -109,10 +105,10 @@ class EducationSystem(object):
          print("******")
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
-         print("courseName:" + exam.course.courseName)
-         print("professor.firstName:" + exam.course.professor.firstName)
-         print("professor.lastName:" + exam.course.professor.lastName)
-         print("professor.id:" + exam.course.professor.id)
+         print("courseName:" + exam.courseName)
+         print("professor.firstName:" + exam.professor.firstName)
+         print("professor.lastName:" + exam.professor.lastName)
+         print("professor.id:" + exam.professor.id)
          print()
 
    def examIdIsValid(self, exam_id):
@@ -133,7 +129,7 @@ class EducationSystem(object):
       if current_exam is None:
          return False
 
-      for student in exam.course.students:
+      for student in exam.students:
          if str(student.id) == student_id:
             return True
 
