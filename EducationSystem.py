@@ -108,15 +108,7 @@ class EducationSystem(object):
    def printExams(self):
       print("status:" + str(self.status))
       print("date:" + str(self.date))
-      for exam in self.exams.exams.values():
-         print("******")
-         print("examId:" + str(exam.examId))
-         print("roomNumber:" + str(exam.roomNumber))
-         print("courseName:" + exam.courseName)
-         print("professor.firstName:" + self.professors.professors[exam.professorId].firstName)
-         print("professor.lastName:" + self.professors.professors[exam.professorId].lastName)
-         print("professor.id:" + self.professors.professors[exam.professorId].id)
-         print()
+      self.exams.printExams()
 
    def examIdIsValid(self, exam_id):
       for exam in self.exams.exams.values():

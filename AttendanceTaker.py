@@ -70,3 +70,4 @@ class AttendanceTaker():
         command, exam_id = self.commandHandler.getExamsStudentsList()
         while command == "get_students":
             self.educationSystem.printExam(exam_id)
+            command, exam_id = self.commandHandler.getExamsStudentsList()

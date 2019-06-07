@@ -17,5 +17,6 @@ class Exam():
 
     def printStudents(self):
         SID = 0
+        
         for student in self.students:
             print(student[SID])
