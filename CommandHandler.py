@@ -17,7 +17,6 @@ class CommandHandler():
 
     def getExamId(self):
         educationSystem = EducationSystem.getInstance()
-        educationSystem.printExams()
         print("Enter your demanded ExamId:")
 
         input_res = input()
