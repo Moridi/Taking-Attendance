@@ -139,7 +139,8 @@ class EducationSystem(object):
       for student in self.students.students:
          if str(student.id) == student_id:
             return True
-
+   def printExam(self, examId):
+      self.exams.printExam(examId)
 
       return False
       

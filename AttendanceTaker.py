@@ -24,18 +24,23 @@ class AttendanceTaker():
     def run(self):
         self.educationSystem.printDatabase()
         while True:
-            self.get_exams()
-            exam_id = self.get_exam()
+            self.getExams()
+            exam_id = self.getExam()
             if exam_id == "done":
                 break
-            is_teacher_signed, students_list =  self.get_students(exam_id)
-            self.send_result(exam_id, is_teacher_signed, students_list)
+            is_teacher_signed, students_list =  self.getStudents(exam_id)
+            self.sendResult(exam_id, is_teacher_signed, students_list)
 
-    def get_exams(self):
+    def getStudentsList(self):
+        command, exam_id = self.commandHandler.getStudents()
+        if command == "get_students":
+            self.educationSystem.printExam(exam_id)
+
+    def getExams(self):
         if self.commandHandler.getExams() == "get_exams":
             self.educationSystem.printExams()
 
-    def get_exam(self):
+    def getExam(self):
         while True:
             exam_id = self.commandHandler.getExamId()
             if self.educationSystem.examIdIsValid(exam_id) or exam_id == "done":
@@ -43,7 +48,7 @@ class AttendanceTaker():
 
         return exam_id
 
-    def get_students(self, exam_id):
+    def getStudents(self, exam_id):
         students_list = []
         while True:
             student_id = self.commandHandler.getStudentId()
@@ -57,7 +62,7 @@ class AttendanceTaker():
         is_teacher_signed = self.commandHandler.getTeacherSignStatus()
         return is_teacher_signed, students_list
 
-    def send_result(self, exam_id, is_teacher_signed, students_list):
+    def sendResult(self, exam_id, is_teacher_signed, students_list):
         http_handler = HttpHandler.getInstance()
         http_handler.postAttendanceResult(
             data={
