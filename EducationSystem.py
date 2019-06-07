@@ -2,6 +2,7 @@ from HttpHandler import HttpHandler
 from Exam import Exam
 from Professor import Professor
 from Student import Student
+from Students import Students
 
 class EducationSystem(object):
    __instance = None
@@ -17,7 +18,7 @@ class EducationSystem(object):
       else:
          EducationSystem.__instance = self
          self.exams = []
-         self.students = {}
+         self.students = Students()
 
    def initializeSystem(self):
       self.getAttendanceList()

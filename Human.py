@@ -3,3 +3,6 @@ class Human():
         self.firstName = firstName
         self.lastName = lastName
         self.id = id
+
+    def getId(self):
+        return self.id
