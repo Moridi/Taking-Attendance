@@ -33,6 +33,14 @@ class CommandHandler():
         input_res = input()
         return input_res
 
+    def getStudents(self):
+        input_res, exam_id = input().split()
+        if input_res == "get_students":
+            return "get_students", int(exam_id)
+        else:
+            return "no", 1
+        pass
+
     def getTeacherSignStatus(self):
         print("Is it teacher signed?[Y/N]")
         input_res = input()
