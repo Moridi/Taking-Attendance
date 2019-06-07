@@ -1,19 +1,20 @@
 from EducationSystem import EducationSystem
 
+
 class CommandHandler():
     __instance = None
 
     @staticmethod
     def getInstance():
-      if CommandHandler.__instance == None:
-         CommandHandler()
-      return CommandHandler.__instance
+        if CommandHandler.__instance is None:
+            CommandHandler()
+        return CommandHandler.__instance
 
     def __init__(self):
-      if CommandHandler.__instance != None:
-         raise Exception("This class is a singleton!")
-      else:
-         CommandHandler.__instance = self
+        if CommandHandler.__instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
+            CommandHandler.__instance = self
 
     def getExamId(self):
         educationSystem = EducationSystem.getInstance()
@@ -29,9 +30,8 @@ class CommandHandler():
         return input_res
 
     def getExams(self):
-    	input_res = input()
-    	educationSystem = EducationSystem.getInstance()
-    	educationSystem.printExams()
+        input_res = input()
+        return input_res
 
     def getTeacherSignStatus(self):
         print("Is it teacher signed?[Y/N]")

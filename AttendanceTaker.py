@@ -1,10 +1,12 @@
-from EducationSystem import EducationSystem
 from CommandHandler import CommandHandler
+from EducationSystem import EducationSystem
 from HttpHandler import HttpHandler
+
 
 class AttendanceTaker():
     __instance = None
-    @staticmethod 
+
+    @staticmethod
     def getInstance():
         if AttendanceTaker.__instance == None:
             AttendanceTaker()
@@ -20,35 +22,45 @@ class AttendanceTaker():
         self.commandHandler = CommandHandler.getInstance()
 
     def run(self):
-        
         while True:
-            exam_id = None
-            if self.commandHandler.getExams() == "get_exams":
-                self.educationSystem.printExams()
-
-            while True:
-                exam_id = self.commandHandler.getExamId()
-                if self.educationSystem.examIdIsValid(exam_id) or exam_id == "done":
-                    break
-            
+            self.get_exams()
+            exam_id = self.get_exam()
             if exam_id == "done":
                 break
+            is_teacher_signed, students_list =  self.get_students(exam_id)
+            self.send_result(exam_id, is_teacher_signed, students_list)
 
-            students_list = []
-            while True:
-                student_id = self.commandHandler.getStudentId()
-                if student_id == "done":
-                    break
-                if self.educationSystem.studentIsInExam(exam_id, student_id):
-                    students_list.append(int(student_id))
-                else:
-                    print("given student_id not found")
+    def get_exams(self):
+        if self.commandHandler.getExams() == "get_exams":
+            self.educationSystem.printExams()
 
-            is_teacher_signed = self.commandHandler.getTeacherSignStatus()
-            httpHandler = HttpHandler.getInstance()
-            httpHandler.postAttendanceResult(
-                data={
-                    "exam_id": int(exam_id),
-                    "is_teacher_signed": is_teacher_signed,
-                    "present_students_list": students_list
-                })
+    def get_exam(self):
+        while True:
+            exam_id = self.commandHandler.getExamId()
+            if self.educationSystem.examIdIsValid(exam_id) or exam_id == "done":
+                break
+
+        return exam_id
+
+    def get_students(self, exam_id):
+        students_list = []
+        while True:
+            student_id = self.commandHandler.getStudentId()
+            if student_id == "done":
+                break
+            if self.educationSystem.studentIsInExam(exam_id, student_id):
+                students_list.append(int(student_id))
+            else:
+                print("given student_id not found")
+
+        is_teacher_signed = self.commandHandler.getTeacherSignStatus()
+        return is_teacher_signed, students_list
+
+    def send_result(self, exam_id, is_teacher_signed, students_list):
+        http_handler = HttpHandler.getInstance()
+        http_handler.postAttendanceResult(
+            data={
+                "exam_id": int(exam_id),
+                "is_teacher_signed": is_teacher_signed,
+                "present_students_list": students_list
+            })
