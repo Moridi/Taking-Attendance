@@ -52,8 +52,8 @@ class EducationSystem(object):
             studentElement["id"])
       
       self.students.addStudent(student)
-            # studentElement["chair_number"])
-      return student.getId()
+      return (student.getId(), \
+            studentElement["chair_number"])
 
    def setExam(self, examElement):
 
@@ -69,8 +69,8 @@ class EducationSystem(object):
       jsonStudents = examElement["students"]
 
       for index, studentElement in enumerate(jsonStudents):
-         studentId = self.setStudent(studentElement)
-         exam.addStudent(studentId)
+         student = self.setStudent(studentElement)
+         exam.addStudent(student)
       
       return exam
 
@@ -96,15 +96,14 @@ class EducationSystem(object):
          print("professor.id:" + self.professors.professors[exam.professorId].id)
          print()
          print("Students:")
-         for studentId in exam.studentIds:
+         for student in exam.students:
             print("######")
-            print("student.firstName:" + str(self.students.students[studentId].firstName))
-            print("student.lastName:" + str(self.students.students[studentId].lastName))
-            print("student.id:" + str(self.students.students[studentId].id))
-            # print("student.chairNumber:" + str(student.chairNumber))
+            print("student.firstName:" + str(self.students.students[student[0]].firstName))
+            print("student.lastName:" + str(self.students.students[student[0]].lastName))
+            print("student.id:" + str(self.students.students[student[0]].id))
+            print("student.chairNumber:" + str(student[1]))
          print("$$$$$")
 
-   
    def printExams(self):
       print("status:" + str(self.status))
       print("date:" + str(self.date))
@@ -113,9 +112,9 @@ class EducationSystem(object):
          print("examId:" + str(exam.examId))
          print("roomNumber:" + str(exam.roomNumber))
          print("courseName:" + exam.courseName)
-         # print("professor.firstName:" + exam.professor.firstName)
-         # print("professor.lastName:" + exam.professor.lastName)
-         # print("professor.id:" + exam.professor.id)
+         print("professor.firstName:" + self.pro[exam.professorId].firstName)
+         print("professor.lastName:" + self.pro[exam.professorId].lastName)
+         print("professor.id:" + self.pro[exam.professorId].id)
          print()
 
    def examIdIsValid(self, exam_id):

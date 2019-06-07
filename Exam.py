@@ -7,7 +7,7 @@ class Exam():
         self.endAt = endAt
         self.courseName = courseName
         self.professorId = professorId
-        self.studentIds = []
+        self.students = []
 
     def addStudent(self, newStudent):
-        self.studentIds.append(newStudent)
+        self.students.append(newStudent)
